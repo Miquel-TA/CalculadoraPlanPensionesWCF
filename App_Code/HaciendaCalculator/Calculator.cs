@@ -3,17 +3,23 @@ using System.Collections.Generic;
 
 public class Calculator
 {
-    public decimal Calculate(bool autonomo, bool empleado, decimal salary, decimal inversion)
+    public decimal Calculate(PersonType personType, decimal inversion)
     {
         decimal maxInvestment = 1500;
-        if (autonomo) maxInvestment += 4250;
-        if (empleado) maxInvestment += 8500;
+        if (personType.Autonomo) maxInvestment += 4250;
+        if (personType.Empleado) maxInvestment += 8500;
 
-        decimal TaxPercent = GetBracket(salary);
 
         if (inversion > maxInvestment)
         {
             return -1m;
+        }
+
+        decimal TaxPercent = GetBracket(personType.Salary);
+
+        if (TaxPercent == 0m)
+        {
+            return -2m;
         }
 
         decimal investmentReturned = inversion * TaxPercent;
@@ -38,6 +44,6 @@ public class Calculator
                 return bracket.Value;
             }
         }
-        throw new Exception("Salario incorrecto.");
+        return 0m;
     }
 }

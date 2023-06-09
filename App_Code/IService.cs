@@ -12,36 +12,29 @@ public interface IService
 {
 
 	[OperationContract]
-	string GetData(int value);
+	string Echo(int value);
 
 	[OperationContract]
-	decimal CalculateDesgravacionInversion(bool autonomo, bool empleado, decimal salary, decimal inversion);
-
-
-    [OperationContract]
-	CompositeType GetDataUsingDataContract(CompositeType composite);
+	decimal CalculateDesgravacionInversion(PersonType personType, decimal investment);
 
 	// TODO: agregue aquí sus operaciones de servicio
 }
 
 // Utilice un contrato de datos, como se ilustra en el ejemplo siguiente, para agregar tipos compuestos a las operaciones de servicio.
 [DataContract]
-public class CompositeType
+public class PersonType
 {
-	bool boolValue = true;
-	string stringValue = "Hello ";
+    [DataMember]
+    public bool Autonomo { get; set; }
+    [DataMember]
+    public bool Empleado { get; set; }
+    [DataMember]
+	public decimal Salary { get; set; }
 
-	[DataMember]
-	public bool BoolValue
-	{
-		get { return boolValue; }
-		set { boolValue = value; }
-	}
-
-	[DataMember]
-	public string StringValue
-	{
-		get { return stringValue; }
-		set { stringValue = value; }
-	}
+    public PersonType(bool autonomo, bool empleado, decimal Salary)
+    {
+        this.Autonomo = autonomo;
+        this.Empleado = empleado;
+		this.Salary = Salary;
+    }
 }
